@@ -5,3 +5,5 @@ MVP de gestão e confirmação rápida de escalas ministeriais para apoio à com
 - **Stack:** HTML5, CSS3, Vanilla JavaScript (PWA Mobile-First).
 - **Impacto Social:** ODS 11 — Cidades e Comunidades Sustentáveis.
 - **Licença:** MIT
+## Como Executar
+Abra o arquivo index.html no navegador ou utilize a extensão Live Server.
