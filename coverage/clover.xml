@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1794267131290" clover="3.2.0">
+  <project timestamp="1794267131290" name="All files">
+    <metrics statements="6" coveredstatements="6" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4" elements="18" coveredelements="17" complexity="0" loc="6" ncloc="6" packages="1" files="1" classes="1"/>
+    <file name="app.js" path="C:\Projetos\Faculdade\Painel Campus\MVP---app-voluntarios\app.js">
+      <metrics statements="6" coveredstatements="6" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
+      <line num="3" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="4" count="1" type="cond" truecount="2" falsecount="0"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

@@ -1,0 +1,24 @@
+{
+  "name": "mvp---app-voluntarios",
+  "version": "1.0.0",
+  "description": "MVP de gestão e confirmação rápida de escalas ministeriais para apoio à comunidade local.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanADS2025/MVP---app-voluntarios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanADS2025/MVP---app-voluntarios/issues"
+  },
+  "homepage": "https://github.com/DanADS2025/MVP---app-voluntarios#readme",
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2"
+  }
+}
