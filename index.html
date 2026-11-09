@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>App Voluntários CAMPUS</title>
+  <style>
+    :root {
+      --primary: #1D4ED8;
+      --primary-hover: #1e40af;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --gray-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --radius: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #e2e8f0;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    /* Container mobile simulador (360px a 420px) */
+    .app-container {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      background-color: var(--gray-bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Cabeçalho */
+    header {
+      background-color: var(--primary);
+      color: #ffffff;
+      padding: 16px 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Telas / Navegação SPA */
+    .screen {
+      display: none;
+      flex: 1;
+      padding: 24px 20px;
+      flex-direction: column;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tipografia e Títulos */
+    .screen-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .screen-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* Formulários */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background-color: #ffffff;
+      color: var(--text-main);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+    }
+
+    .toggle-password-btn {
+      position: absolute;
+      right: 4px;
+      height: 40px;
+      min-width: 48px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .toggle-password-btn:hover {
+      color: var(--text-main);
+    }
+
+    /* Botões Padrão (Acessibilidade: min-height 48px) */
+    .btn {
+      width: 100%;
+      min-height: 48px;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.1s, opacity 0.2s, background-color 0.2s;
+      padding: 12px 16px;
+      text-align: center;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-success {
+      background-color: #16a34a;
+      color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.25);
+    }
+
+    .btn-success:hover {
+      background-color: #15803d;
+    }
+
+    .btn-whatsapp {
+      background-color: #25D366;
+      color: #0b381a;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #20bd5a;
+    }
+
+    .btn-outline-gray {
+      background-color: #ffffff;
+      color: #475569;
+      border: 2px solid #cbd5e1;
+    }
+
+    .btn-outline-gray:hover {
+      background-color: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    /* Cards e Blocos */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      margin-bottom: 24px;
+    }
+
+    .card-header-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      background-color: #eff6ff;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .card-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .card-item:last-of-type {
+      border-bottom: none;
+      margin-bottom: 16px;
+      padding-bottom: 0;
+    }
+
+    .item-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+    }
+
+    .item-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Status Pill */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-top: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .status-badge.waiting {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid #fde68a;
+    }
+
+    .status-badge.confirmed {
+      background-color: var(--success-bg);
+      color: var(--success);
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Caixa de Alerta (Tela 3) */
+    .alert-box {
+      background-color: var(--danger-bg);
+      border: 2px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .alert-tag {
+      display: inline-block;
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .alert-desc {
+      color: #7f1d1d;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* Espaçamentos e Ações */
+    .actions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    /* Notificação visual / Toast */
+    .feedback-banner {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background-color: var(--success-bg);
+      color: var(--success);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 16px;
+      animation: fadeIn 0.2s ease-in;
+    }
+
+    .feedback-banner.show {
+      display: block;
+    }
+
+    /* Rodapé */
+    footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .secure-icon {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Cabeçalho Fixo -->
+    <header>
+      <h1>App Voluntários CAMPUS</h1>
+    </header>
+
+    <!-- TELA 1: LOGIN -->
+    <section id="screen-login" class="screen active" aria-labelledby="login-title">
+      <div style="margin-top: 10px; margin-bottom: 24px; text-align: center;">
+        <h2 id="login-title" class="screen-title">Portal do Voluntário</h2>
+        <p class="screen-subtitle">Acesse suas escalas e confirme sua presença</p>
+      </div>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail institucional</label>
+          <div class="input-wrapper">
+            <input 
+              type="email" 
+              id="email" 
+              class="form-input" 
+              value="lucas.silva@campus.org" 
+              required 
+              autocomplete="email" 
+              placeholder="seu.email@campus.org"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Senha de acesso</label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              class="form-input" 
+              value="123456" 
+              required 
+              placeholder="Digite sua senha"
+            />
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="toggle-password-btn" 
+              aria-label="Exibir ou ocultar senha"
+              onclick="togglePasswordVisibility()"
+            >
+              Exibir
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <button type="submit" class="btn btn-primary" id="btn-login">
+            Entrar no Sistema
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TELA 2: GESTÃO E CONFIRMAÇÃO DE ESCALA -->
+    <section id="screen-escala" class="screen" aria-labelledby="escala-title">
+      <div style="margin-bottom: 18px;">
+        <h2 id="escala-title" class="screen-title">Olá, Lucas Silva 👋</h2>
+        <p class="screen-subtitle" style="margin-bottom: 0;">Você possui 1 escala agendada para este fim de semana:</p>
+      </div>
+
+      <!-- Feedback de confirmação -->
+      <div id="feedback-confirmed" class="feedback-banner" role="status" aria-live="polite">
+        [✓] Presença confirmada com sucesso! Obrigado por servir.
+      </div>
+
+      <!-- Card da Escala -->
+      <article class="card" aria-label="Detalhes da Escala">
+        <span class="card-header-badge">MINISTÉRIO KIDS</span>
+        <h3 class="card-title">Culto da Família - Domingo</h3>
+
+        <div class="card-item">
+          <span class="item-label">Data & Horário</span>
+          <span class="item-value">15 de Novembro de 2026 | 10:00 às 12:00</span>
+        </div>
+
+        <div class="card-item">
+          <span class="item-label">Função</span>
+          <span class="item-value">Monitor de Atividades (3-5 anos)</span>
+        </div>
+
+        <div class="card-item">
+          <span class="item-label">Status atual</span>
+          <div>
+            <span id="scale-status" class="status-badge waiting">
+              [?] Aguardando Resposta
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ações -->
+      <div class="actions-stack">
+        <button 
+          type="button" 
+          id="btn-confirm-presence" 
+          class="btn btn-success" 
+          onclick="confirmPresence()"
+        >
+          [V] Confirmar Presença (1 toque)
+        </button>
+
+        <button 
+          type="button" 
+          id="btn-go-unavailable" 
+          class="btn btn-outline-gray" 
+          onclick="navigateTo('screen-indisponivel')"
+        >
+          [X] Indisponível / Solicitar Troca
+        </button>
+      </div>
+    </section>
+
+    <!-- TELA 3: ALERTA DE INDISPONIBILIDADE & WHATSAPP -->
+    <section id="screen-indisponivel" class="screen" aria-labelledby="indisponivel-title">
+      <div style="margin-bottom: 18px;">
+        <h2 id="indisponivel-title" class="screen-title">Sinalizar Ausência</h2>
+        <p class="screen-subtitle" style="margin-bottom: 0;">Notificação de indisponibilidade de escala</p>
+      </div>
+
+      <div class="alert-box" role="alert">
+        <div class="alert-tag">[X] Status: INDISPONÍVEL</div>
+        <p class="alert-desc">
+          Avise a coordenação para evitar desfalques no Ministério Kids.
+        </p>
+      </div>
+
+      <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">
+        Ao clicar no botão abaixo, uma mensagem direta pronta para envio será aberta no WhatsApp da coordenação do Ministério Kids.
+      </div>
+
+      <div class="actions-stack">
+        <button 
+          type="button" 
+          class="btn btn-whatsapp" 
+          onclick="openWhatsAppNotice()"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086.159.058 1.011.477 1.184.564.173.086.289.13.332.202.043.072.043.419-.101.824z"/>
+          </svg>
+          Avisar Líder no WhatsApp (wa.me)
+        </button>
+
+        <button 
+          type="button" 
+          class="btn btn-outline-gray" 
+          onclick="navigateTo('screen-escala')"
+        >
+          Voltar para Minhas Escalas
+        </button>
+      </div>
+    </section>
+
+    <!-- Rodapé Fixo -->
+    <footer>
+      <span class="secure-icon" aria-hidden="true">🔒</span>
+      <span>Acesso Seguro e Criptografado</span>
+    </footer>
+  </div>
+
+  <script>
+    // Gerenciamento de navegação entre telas
+    function navigateTo(targetScreenId) {
+      const screens = document.querySelectorAll('.screen');
+      screens.forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      const target = document.getElementById(targetScreenId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Toggle de visibilidade da senha
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('toggle-password');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = 'Ocultar';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = 'Exibir';
+      }
+    }
+
+    // Validação e login
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Por favor, preencha todos os campos para continuar.');
+        return;
+      }
+
+      // Navega para a Tela 2
+      navigateTo('screen-escala');
+    }
+
+    // Confirmação de presença (1 toque)
+    function confirmPresence() {
+      const statusBadge = document.getElementById('scale-status');
+      const feedbackBanner = document.getElementById('feedback-confirmed');
+      const confirmBtn = document.getElementById('btn-confirm-presence');
+
+      // Atualiza o status visual
+      statusBadge.classList.remove('waiting');
+      statusBadge.classList.add('confirmed');
+      statusBadge.textContent = '[V] Presença Confirmada';
+
+      // Feedback visual e desativação do botão para evitar cliques duplicados
+      feedbackBanner.classList.add('show');
+      confirmBtn.style.opacity = '0.7';
+      confirmBtn.style.pointerEvents = 'none';
+      confirmBtn.textContent = '[V] Presença já Confirmada';
+
+      // Esconde feedback após 4 segundos (opcional)
+      setTimeout(() => {
+        feedbackBanner.classList.remove('show');
+      }, 4000);
+    }
+
+    // Link do WhatsApp com mensagem pronta
+    function openWhatsAppNotice() {
+      const url = 'https://wa.me/5511999999999?text=Ola%20Lider!%20Sou%20Lucas%20Silva%20e%20nao%20poderei%20servir%20no%20Kids%20no%20dia%2015/11%20as%2010h.';
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
