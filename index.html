@@ -40,7 +40,6 @@
       font-size: 16px;
     }
 
-    /* Container mobile simulador (360px a 420px) */
     .app-container {
       width: 100%;
       max-width: 420px;
@@ -52,7 +51,6 @@
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     }
 
-    /* Cabeçalho */
     header {
       background-color: var(--primary);
       color: #ffffff;
@@ -70,7 +68,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* Telas / Navegação SPA */
     .screen {
       display: none;
       flex: 1;
@@ -88,7 +85,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Tipografia e Títulos */
     .screen-title {
       font-size: 1.35rem;
       font-weight: 700;
@@ -102,7 +98,6 @@
       margin-bottom: 24px;
     }
 
-    /* Formulários */
     .form-group {
       margin-bottom: 20px;
     }
@@ -157,11 +152,6 @@
       border-radius: 6px;
     }
 
-    .toggle-password-btn:hover {
-      color: var(--text-main);
-    }
-
-    /* Botões Padrão (Acessibilidade: min-height 48px) */
     .btn {
       width: 100%;
       min-height: 48px;
@@ -180,8 +170,14 @@
       text-align: center;
     }
 
-    .btn:active {
+    .btn:active:not(:disabled) {
       transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     .btn-primary {
@@ -190,7 +186,7 @@
       box-shadow: 0 4px 6px -1px rgba(29, 78, 216, 0.25);
     }
 
-    .btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       background-color: var(--primary-hover);
     }
 
@@ -200,7 +196,7 @@
       box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.25);
     }
 
-    .btn-success:hover {
+    .btn-success:hover:not(:disabled) {
       background-color: #15803d;
     }
 
@@ -226,7 +222,6 @@
       border-color: #94a3b8;
     }
 
-    /* Cards e Blocos */
     .card {
       background-color: var(--card-bg);
       border-radius: var(--radius);
@@ -285,7 +280,6 @@
       color: var(--text-main);
     }
 
-    /* Status Pill */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -310,7 +304,6 @@
       border: 1px solid #bbf7d0;
     }
 
-    /* Caixa de Alerta (Tela 3) */
     .alert-box {
       background-color: var(--danger-bg);
       border: 2px solid #fecaca;
@@ -334,7 +327,6 @@
       line-height: 1.4;
     }
 
-    /* Espaçamentos e Ações */
     .actions-stack {
       display: flex;
       flex-direction: column;
@@ -342,7 +334,6 @@
       margin-top: auto;
     }
 
-    /* Notificação visual / Toast */
     .feedback-banner {
       display: none;
       padding: 12px 14px;
@@ -360,7 +351,6 @@
       display: block;
     }
 
-    /* Rodapé */
     footer {
       margin-top: auto;
       padding: 18px 20px;
@@ -374,16 +364,11 @@
       justify-content: center;
       gap: 6px;
     }
-
-    .secure-icon {
-      font-size: 0.9rem;
-    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
-    <!-- Cabeçalho Fixo -->
     <header>
       <h1>App Voluntários CAMPUS</h1>
     </header>
@@ -449,12 +434,10 @@
         <p class="screen-subtitle" style="margin-bottom: 0;">Você possui 1 escala agendada para este fim de semana:</p>
       </div>
 
-      <!-- Feedback de confirmação -->
       <div id="feedback-confirmed" class="feedback-banner" role="status" aria-live="polite">
         [✓] Presença confirmada com sucesso! Obrigado por servir.
       </div>
 
-      <!-- Card da Escala -->
       <article class="card" aria-label="Detalhes da Escala">
         <span class="card-header-badge">MINISTÉRIO KIDS</span>
         <h3 class="card-title">Culto da Família - Domingo</h3>
@@ -479,7 +462,6 @@
         </div>
       </article>
 
-      <!-- Ações -->
       <div class="actions-stack">
         <button 
           type="button" 
@@ -516,7 +498,7 @@
       </div>
 
       <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">
-        Ao clicar no botão abaixo, uma mensagem direta pronta para envio será aberta no WhatsApp da coordenação do Ministério Kids.
+        Ao clicar no botão abaixo, o WhatsApp abrirá com mensagem pré-formatada solicitando apoio com a substituição da escala.
       </div>
 
       <div class="actions-stack">
@@ -541,20 +523,15 @@
       </div>
     </section>
 
-    <!-- Rodapé Fixo -->
     <footer>
-      <span class="secure-icon" aria-hidden="true">🔒</span>
-      <span>Acesso Seguro e Criptografado</span>
+      <span>🔒 Acesso Seguro e Criptografado</span>
     </footer>
   </div>
 
   <script>
-    // Gerenciamento de navegação entre telas
     function navigateTo(targetScreenId) {
       const screens = document.querySelectorAll('.screen');
-      screens.forEach(screen => {
-        screen.classList.remove('active');
-      });
+      screens.forEach(screen => screen.classList.remove('active'));
 
       const target = document.getElementById(targetScreenId);
       if (target) {
@@ -563,7 +540,6 @@
       }
     }
 
-    // Toggle de visibilidade da senha
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
       const toggleBtn = document.getElementById('toggle-password');
@@ -577,7 +553,6 @@
       }
     }
 
-    // Validação e login
     function handleLogin(event) {
       event.preventDefault();
       const email = document.getElementById('email').value.trim();
@@ -587,40 +562,35 @@
         alert('Por favor, preencha todos os campos para continuar.');
         return;
       }
-
-      // Navega para a Tela 2
       navigateTo('screen-escala');
     }
 
-    // Confirmação de presença (1 toque)
     function confirmPresence() {
       const statusBadge = document.getElementById('scale-status');
       const feedbackBanner = document.getElementById('feedback-confirmed');
       const confirmBtn = document.getElementById('btn-confirm-presence');
 
-      // Atualiza o status visual
       statusBadge.classList.remove('waiting');
       statusBadge.classList.add('confirmed');
       statusBadge.textContent = '[V] Presença Confirmada';
 
-      // Feedback visual e desativação do botão para evitar cliques duplicados
       feedbackBanner.classList.add('show');
-      confirmBtn.style.opacity = '0.7';
-      confirmBtn.style.pointerEvents = 'none';
+      
+      // Bloqueio idempotente real
+      confirmBtn.disabled = true;
+      confirmBtn.setAttribute('aria-disabled', 'true');
       confirmBtn.textContent = '[V] Presença já Confirmada';
 
-      // Esconde feedback após 4 segundos (opcional)
       setTimeout(() => {
         feedbackBanner.classList.remove('show');
       }, 4000);
     }
 
-    // Link do WhatsApp com mensagem pronta
     function openWhatsAppNotice() {
-      const url = 'https://wa.me/5511999999999?text=Ola%20Lider!%20Sou%20Lucas%20Silva%20e%20nao%20poderei%20servir%20no%20Kids%20no%20dia%2015/11%20as%2010h.';
+      const msg = encodeURIComponent("Olá Líder! Sou Lucas Silva e não poderei servir no Kids dia 15/11 às 10h. Poderia me ajudar com a substituição da escala?");
+      const url = `https://wa.me/5511999999999?text=${msg}`;
       window.open(url, '_blank');
     }
   </script>
 </body>
 </html>
-/* Acessibilidade: area de toque minima de 48px e contraste WCAG */
